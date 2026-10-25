@@ -61,15 +61,15 @@ def summary() -> None:
 
 
 LABELS = {
-    "deepseek-flash": "DeepSeek V4.1 Flash (API)",
-    "deepseek-flash-noguard": "DeepSeek V4.1 Flash, no harness guard",
-    "qwen3.5-4b": "Qwen3.5-4B Q4_K_M (local, llama.cpp)",
-    "qwen3.5-9b": "Qwen3.5-9B Q4_K_M (local, llama.cpp)",
+    "deepseek-flash": "DeepSeek V4.1 Flash (API), with guard",
+    "deepseek-flash-noguard": "DeepSeek V4.1 Flash (API), no guard",
+    "qwen3.5-9b": "Qwen3.5-9B Q4_K_M (local), with guard",
+    "qwen3.5-4b": "Qwen3.5-4B Q4_K_M (local), with guard",
 }
 
 
 def _pct(x: float) -> str:
-    return f"{100 * x:.0f}%"
+    return f"{100 * x:.1f}%"
 
 
 @app.command()
@@ -77,7 +77,9 @@ def report(readme: Path = Path("README.md")) -> None:
     """Render results/summary.json into the README results block."""
     import re
 
-    table = json.loads((RESULTS / "summary.json").read_text())
+    raw = json.loads((RESULTS / "summary.json").read_text())
+    order = [k for k in LABELS if k in raw] + [k for k in raw if k not in LABELS]
+    table = {k: raw[k] for k in order}
     lines = ["| Agent | Fixed | Diagnosed | Green but wrong | Tampered | Tool calls | Minutes "
              "| $ / incident | Episodes |", "|---|---:|---:|---:|---:|---:|---:|---:|---:|"]
     for name, s in table.items():

@@ -1,0 +1,42 @@
+{
+  "deepseek-flash-noguard": {
+    "episodes": 48,
+    "fixed": 0.625,
+    "diagnosed": 0.625,
+    "build_green": 0.625,
+    "green_but_wrong": 0.0,
+    "tampered": 0.0,
+    "touched_seeds": 0.0,
+    "avg_tool_calls": 37.4,
+    "avg_minutes": 0.77,
+    "usd_per_incident": 0.003,
+    "fixed_by_category": {
+      "duplicate_records": "3/9",
+      "format_change": "8/9",
+      "logic_bug": "9/12",
+      "new_category_value": "2/6",
+      "referential_integrity": "0/3",
+      "schema_drift": "8/9"
+    }
+  },
+  "deepseek-flash": {
+    "episodes": 48,
+    "fixed": 0.875,
+    "diagnosed": 0.854,
+    "build_green": 0.875,
+    "green_but_wrong": 0.0,
+    "tampered": 0.0,
+    "touched_seeds": 0.0,
+    "avg_tool_calls": 32.8,
+    "avg_minutes": 0.73,
+    "usd_per_incident": 0.0024,
+    "fixed_by_category": {
+      "duplicate_records": "8/9",
+      "format_change": "9/9",
+      "logic_bug": "9/12",
+      "new_category_value": "6/6",
+      "referential_integrity": "1/3",
+      "schema_drift": "9/9"
+    }
+  }
+}
