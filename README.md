@@ -42,7 +42,9 @@ untouched. Minutes are wall time per episode with three episodes in parallel.
   submitted diagnosis. **Every failure — 6 of 6 with the guard, 18 of 18 without — is an agent
   that never edited a file**: it found the cause and kept investigating until it ran out of
   turns. In S15 it had the exact discrepancy (lifetime value 402,095 vs. completed revenue
-  305,170) on turn 3 and never wrote the one-line fix.
+  305,170) on turn 3 and never wrote the one-line fix. (One guarded episode did the opposite:
+  fixed the pipeline and hit the turn limit before submitting — it counts as fixed, not
+  diagnosed.)
 - **Harness design is worth 25 points.** The guard is two lines of feedback a production agent
   loop should give anyway — "you have made this exact call N times" and "5 turns left: fix and
   submit". It lifts the fix rate from 62.5% to 87.5% and makes incidents cheaper, because
