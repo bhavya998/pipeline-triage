@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pipeline-triage"
+version = "0.1.0"
+description = "An agent that triages broken dbt pipelines: finds the root cause, patches the model, proves it with tests."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "MIT" }
+authors = [{ name = "Bhavya Shah" }]
+dependencies = [
+  "dbt-core>=1.10",
+  "dbt-duckdb>=1.9",
+  "duckdb>=1.3",
+  "httpx>=0.27",
+  "pydantic>=2.7",
+  "typer>=0.12",
+]
+
+[project.scripts]
+pipeline-triage = "pipeline_triage.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pipeline_triage"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["models: requires a model server or API key", "slow: builds every incident (several minutes)"]

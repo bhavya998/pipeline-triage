@@ -1,0 +1,64 @@
+version: 2
+
+models:
+  - name: stg_customers
+    columns:
+      - name: customer_id
+        data_tests: [unique, not_null]
+      - name: email
+        data_tests: [not_null]
+
+  - name: stg_orders
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]
+      - name: customer_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
+      - name: order_date
+        data_tests: [not_null]
+      - name: status
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [placed, shipped, completed, returned, cancelled]
+
+  - name: stg_payments
+    columns:
+      - name: payment_id
+        data_tests: [unique, not_null]
+      - name: order_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_orders')
+                field: order_id
+      - name: method
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [card, paypal, bank_transfer, gift_card]
+      - name: amount
+        data_tests: [not_null]
+
+  - name: fct_orders
+    columns:
+      - name: order_id
+        data_tests: [unique, not_null]
+      - name: country
+        data_tests: [not_null]
+
+  - name: dim_customers
+    columns:
+      - name: customer_id
+        data_tests: [unique, not_null]
+
+  - name: revenue_daily
+    columns:
+      - name: order_date
+        data_tests: [unique, not_null]

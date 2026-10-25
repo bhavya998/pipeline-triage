@@ -1,0 +1,27 @@
+name: shopflow
+version: "1.0.0"
+config-version: 2
+profile: shopflow
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target"]
+
+# Raw data lands as text; staging models own the casting.
+seeds:
+  shopflow:
+    raw_customers:
+      +column_types: {customer_id: varchar, full_name: varchar, email: varchar, country: varchar, created_at: varchar, updated_at: varchar}
+    raw_orders:
+      +column_types: {order_id: varchar, customer_id: varchar, order_date: varchar, status: varchar}
+    raw_payments:
+      +column_types: {payment_id: varchar, order_id: varchar, method: varchar, amount: varchar}
+
+models:
+  shopflow:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table
